@@ -1,0 +1,33 @@
+body {
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-color: #f0f0f0; /* Optional background color */
+}
+
+.gamescreen {
+width: 1200px;
+height: 750px;
+background-color: #fafafa; /* Optional background color for the screen */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for better appearance */
+}
+
+h1 {
+    position: absolute; /* Position the text absolutely */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the text's dimensions */
+    color: rgb(77, 77, 77); /* Make the text visible over the black background */
+    font-size: 48px; /* Adjust font size as needed */
+    font-family: 'Tomorrow', sans-serif; /* Use the Tomorrow font if available */
+    z-index: 2; /* Ensure the text appears above the screen */
+    pointer-events: none
+}
+
+.tomorrow-regular {
+  font-family: "Tomorrow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
