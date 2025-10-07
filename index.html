@@ -1,17 +1,32 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" contient="width=device-width, initial-scale=1.0">
-    <title>nidelven_rush</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nidelven Rush – Enkel</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Nidelven RUSH</h1>
+  <h1>Nidelven rush</h1>
+  <p>Hopp: <kbd>Mellomrom</kbd>/<kbd>W</kbd> · Dykk (hold): <kbd>Pil ned</kbd>/<kbd>S</kbd></p>
 
-    <div class="gamescreen">
+  <div class="game-wrap">
+    <canvas id="game" width="900" height="420"></canvas>
 
-
+    <div id="overlay">
+      <div class="card">
+        <h2>Nidelven Rush</h2>
+        <p>Unngå hindrene!<br>— Hopp over det som flyter på vannet<br>— Dykk under fuglene</p>
+        <button id="btnStart">Start</button>
+      </div>
     </div>
+
+    <div class="hud">
+      <div>Poeng: <span id="score">0</span></div>
+      <div>Status: <span id="status">klar</span></div>
+    </div>
+  </div>
+
+  <script defer src="script.js"></script>
 </body>
 </html>

@@ -1,33 +1,54 @@
-body {
-margin: 0;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background-color: #f0f0f0; /* Optional background color */
+:root {
+  --bg: #0b1022;
+  --sky1: #0b132b;
+  --sky2: #102a43;
+  --panel: #111827;
+  --text: #e5e7eb;
+  --accent: #f59e0b;
 }
 
-.gamescreen {
-width: 1200px;
-height: 750px;
-background-color: #fafafa; /* Optional background color for the screen */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for better appearance */
+* { box-sizing: border-box; }
+html, body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+h1, p { text-align: center; margin: 12px 0; }
+
+.game-wrap {
+  width: 900px;
+  max-width: calc(100vw - 24px);
+  margin: 0 auto 24px;
+  position: relative;
 }
 
-h1 {
-    position: absolute; /* Position the text absolutely */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the text's dimensions */
-    color: rgb(77, 77, 77); /* Make the text visible over the black background */
-    font-size: 48px; /* Adjust font size as needed */
-    font-family: 'Tomorrow', sans-serif; /* Use the Tomorrow font if available */
-    z-index: 2; /* Ensure the text appears above the screen */
-    pointer-events: none
+canvas { width: 100%; height: auto; display: block; background: transparent; border: 1px solid #1f2937; border-radius: 10px; }
+
+.hud {
+  display: flex; justify-content: space-between; margin-top: 8px; font-weight: 700;
+  color: var(--accent);
 }
 
-.tomorrow-regular {
-  font-family: "Tomorrow", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+#overlay {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(0,0,0,.5);
 }
+
+.card {
+  background: var(--panel);
+  border: 1px solid #334155;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+button {
+  appearance: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.1); }
+
+
