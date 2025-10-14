@@ -3,17 +3,17 @@
 
 // --- Canvas og grunnverdier
 const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
+const ctx2d = canvas.getContext('2d'); // canvas element for å tegne grafikk, tekst og bilder i spillet
 const W = canvas.width;
 const H = canvas.height;
 
-const riverY = Math.floor(H * 0.62);   // vannlinje
+const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
 const gravity = 0.6;                   // tyngdekraft
-const jumpForce = 12;                  // hoppe-styrke
+const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
 
-// --- Spiller (enkel boks + båt-ellipse for tegning)
+// *Spiller*
 const player = {
-  x: Math.floor(W * 0.22),
+  x: Math.floor(W * 0.25), // Spillerens plassering på canvaset (x-aksen)
   y: riverY - 24,   // starter ved overflata
   w: 44,
   h: 24,
@@ -22,14 +22,14 @@ const player = {
   canJump: true
 };
 
-// --- Enkle skyer (for litt liv i bakgrunnen)
+// Enkle skyer (for litt liv i bakgrunnen).     ta bort!!!!!
 const clouds = Array.from({length: 4}).map(() => ({
   x: Math.random() * W,
   y: 20 + Math.random() * 120,
   s: 0.4 + Math.random() * 0.6
 }));
 
-// --- Hindre
+// *Hindre*
 // type: 'float' (på vann) eller 'air' (fugl).
 const obstacles = [];
 let spawnTimer = 0;          // teller ned til neste hinder
@@ -41,21 +41,20 @@ let gameIsOver = false;
 const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
-const statusEl = document.getElementById('status');
 
 console.log('game-simple.js loaded');
 btnStart.addEventListener('click', start);
 
-// --- Input
+// *Input gjennom tastaturet*
 const keys = {};
 window.addEventListener('keydown', (e) => {
   keys[e.code] = true;
 
-  // Hopp (ikke mens vi er under)
-  if ((e.code === 'Space' || e.code === 'KeyW') && !player.under) {
+  // Hopp -> Pil opp, W eller mellomrom
+  if ((e.code === 'Space' || e.code === 'KeyW' || e.code === 'ArrowUp') && !player.under) {
     tryJump();
   }
-  // Dykk holdes med ArrowDown/KeyS (slås av i keyup)
+  // Dykking må holdes med ArrowDown/KeyS
   if (e.code === 'ArrowDown' || e.code === 'KeyS') {
     player.under = true;
   }
@@ -75,37 +74,28 @@ function start() {
   gameIsOver = false;
   running = true;
 
-  // Spiller tilbake til overflata
-  player.y = riverY - player.h;
-  player.vy = 0;
-  player.under = false;
-  player.canJump = true;
-
-  overlay.style.display = 'none';
+  // nulstiller score
   scoreEl.textContent = score.toString();
-  statusEl.textContent = 'spiller';
 
-  requestAnimationFrame(loop);
+  requestAnimationFrame(loop); // looper bakgrunn
 }
 
 function end() {
-  running = false;
+  running = false; 
   gameIsOver = true;
-  statusEl.textContent = 'game over';
-  overlay.style.display = 'grid';
 }
 
 // --- Enkel hoppelogikk
 function tryJump() {
   // Kan hoppe hvis vi står i overflata (ikke under)
   const onSurface = player.y >= riverY - player.h - 0.01;
-  if (onSurface && !player.under) {
+  if (onSurface && !player.under) { // Gjør at spilleren kan hoppe når på vannoverflaten
     player.vy = -jumpForce;
     player.canJump = false;
   }
 }
 
-// --- Hjelpefunksjon: rektangel-kollisjon
+// *funksjon for kollisjon -> Spiller(a) og Hinder(b)
 function hit(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
@@ -180,7 +170,7 @@ function update(dt) {
   spawnTimer -= dt;
   if (spawnTimer <= 0) {
     spawnObstacle();
-    spawnTimer = 900; // nytt hinder ca. hver 0.9 sek
+    spawnTimer = 1000; // nytt hinder ca. hver 0.9 sek
   }
 
   for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -215,33 +205,11 @@ function update(dt) {
 // --- Tegn alt (enkel stil)
 function draw() {
   // Himmel
-  const g = ctx.createLinearGradient(0, 0, 0, H);
-  g.addColorStop(0, '#0b132b');
+  const g = ctx2d.createLinearGradient(0, 0, 0, H); // Hardkoding av bakgrunnsfarger
+  g.addColorStop(0, '#0a183fff');
   g.addColorStop(1, '#0b1022');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, W, H);
-
-  // Enkle silhuetter (Trondheim-ish)
-  ctx.globalAlpha = 0.35;
-  ctx.fillStyle = '#1f2a44';
-  // Tyholttårnet
-  rect(W*0.16, H*0.18, 6, 90);
-  rect(W*0.155, H*0.16, 26, 6);
-  circle(W*0.165, H*0.14, 16);
-  // Nidarosdomen tårn
-  rect(W*0.66, H*0.22, 18, 95);
-  rect(W*0.70, H*0.18, 22, 115);
-  triangle(W*0.71, H*0.18, W*0.725, H*0.13, W*0.74, H*0.18);
-  rect(W*0.75, H*0.22, 18, 95);
-  ctx.globalAlpha = 1;
-
-  // Skyer
-  ctx.fillStyle = 'rgba(255,255,255,0.75)';
-  clouds.forEach(c => {
-    circle(c.x, c.y, 12*c.s);
-    circle(c.x + 18*c.s, c.y - 6*c.s, 10*c.s);
-    circle(c.x + 36*c.s, c.y, 13*c.s);
-  });
+  ctx2d.fillStyle = g;
+  ctx2d.fillRect(0, 0, W, H);
 
   // Elv
   drawRiver();
@@ -249,16 +217,16 @@ function draw() {
   // Hindre
   obstacles.forEach(o => {
     if (o.type === 'float') {
-      ctx.fillStyle = '#b45309';
+      ctx2d.fillStyle = '#b45309';
       roundRect(o.x, o.y, o.w, o.h, 6);
-      ctx.fill();
+      ctx2d.fill();
     } else {
-      ctx.fillStyle = '#d1d5db';
-      ctx.beginPath();
-      ctx.moveTo(o.x, o.y);
-      ctx.quadraticCurveTo(o.x + o.w*0.4, o.y - 8, o.x + o.w, o.y);
-      ctx.quadraticCurveTo(o.x + o.w*0.4, o.y + 8, o.x, o.y);
-      ctx.fill();
+      ctx2d.fillStyle = '#d1d5db';
+      ctx2d.beginPath();
+      ctx2d.moveTo(o.x, o.y);
+      ctx2d.quadraticCurveTo(o.x + o.w*0.4, o.y - 8, o.x + o.w, o.y);
+      ctx2d.quadraticCurveTo(o.x + o.w*0.4, o.y + 8, o.x, o.y);
+      ctx2d.fill();
     }
   });
 
@@ -267,62 +235,40 @@ function draw() {
 }
 
 // --- Tegnehjelpere (ENKLE)
-function rect(x,y,w,h){ ctx.fillRect(x,y,w,h); }
-function circle(x,y,r){ ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill(); }
-function triangle(x1,y1,x2,y2,x3,y3){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.closePath(); ctx.fill(); }
+function rect(x,y,w,h){ ctx2d.fillRect(x,y,w,h); }
+function circle(x,y,r){ ctx2d.beginPath(); ctx2d.arc(x,y,r,0,Math.PI*2); ctx2d.fill(); }
+function triangle(x1,y1,x2,y2,x3,y3){ ctx2d.beginPath(); ctx2d.moveTo(x1,y1); ctx2d.lineTo(x2,y2); ctx2d.lineTo(x3,y3); ctx2d.closePath(); ctx2d.fill(); }
 function roundRect(x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.arcTo(x+w, y,   x+w, y+h, r);
-  ctx.arcTo(x+w, y+h, x,   y+h, r);
-  ctx.arcTo(x,   y+h, x,   y,   r);
-  ctx.arcTo(x,   y,   x+w, y,   r);
+  ctx2d.beginPath();
+  ctx2d.moveTo(x+r, y);
+  ctx2d.arcTo(x+w, y,   x+w, y+h, r);
+  ctx2d.arcTo(x+w, y+h, x,   y+h, r);
+  ctx2d.arcTo(x,   y+h, x,   y,   r);
+  ctx2d.arcTo(x,   y,   x+w, y,   r);
 }
 
 function drawRiver() {
   // Vannområde
-  ctx.save();
-  ctx.beginPath();
-  ctx.rect(0, riverY, W, H - riverY);
-  ctx.clip();
+  ctx2d.beginPath();
+  ctx2d.rect(0, riverY, W, H - riverY);
 
   // Farge i vannet
-  const g = ctx.createLinearGradient(0, riverY, 0, H);
+  const g = ctx2d.createLinearGradient(0, riverY, 0, H);
   g.addColorStop(0, '#13337a');
-  g.addColorStop(1, '#0b225a');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, riverY, W, H - riverY);
+  ctx2d.fillStyle = g;
+  ctx2d.fillRect(0, riverY, W, H - riverY);
 
-  // Enkle bølger
-  ctx.strokeStyle = 'rgba(255,255,255,.25)';
-  ctx.globalAlpha = 0.6;
-  for (let i=0;i<2;i++){
-    const baseY = riverY + 12 + i*18;
-    ctx.beginPath();
-    for (let x=0;x<=W;x+=6){
-      const yy = baseY + Math.sin((x + performance.now()*0.08)/160 + i)*6;
-      if (x===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy);
-    }
-    ctx.stroke();
-  }
-  ctx.restore();
 }
 
 function drawPlayer() {
-  // Båt
-  ctx.fillStyle = '#f97316';
-  // ellipse-imitasjon: avrundete rektangler
+  // Båtfarge
+  ctx2d.fillStyle = '#f97316';
+  // Båt form og størrelse
   roundRect(player.x - player.w*0.5 + player.w/2, player.y + player.h*0.6, player.w, player.h, 12);
-  ctx.fill();
+  ctx2d.fill();
 
   // Padler (lite hode)
-  ctx.fillStyle = '#fde68a';
+  ctx2d.fillStyle = '#fde68a';
   circle(player.x + player.w*0.2, player.y, 6);
 
-  // Bobler når under
-  if (player.under) {
-    ctx.fillStyle = 'rgba(255,255,255,.5)';
-    circle(player.x + 10, player.y - 8, 2);
-    circle(player.x + 18, player.y - 14, 3);
-  }
 }
