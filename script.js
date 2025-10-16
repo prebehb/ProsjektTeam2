@@ -51,7 +51,7 @@ window.addEventListener('keydown', (e) => {
   keys[e.code] = true;
 
   // Hopp -> Pil opp, W eller mellomrom
-  if ((e.code === 'Space' || e.code === 'KeyW' || e.code === 'ArrowUp') && !player.under) {
+  if ((e.code === 'KeyW' || e.code === 'ArrowUp') && !player.under) {
     tryJump();
   }
   // Dykking må holdes med ArrowDown/KeyS
