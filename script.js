@@ -1,16 +1,20 @@
 // ======== ENKEL 2D RUNNER ========
 // Mål: superenkel, lett å lese, få konsepter.
-
+ 
 // --- Canvas og grunnverdier
 const canvas = document.getElementById('game');
 const ctx2d = canvas.getContext('2d'); // canvas element for å tegne grafikk, tekst og bilder i spillet
 const W = canvas.width;
 const H = canvas.height;
-
+ 
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
 const gravity = 0.6;                   // tyngdekraft
 const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
-
+ 
+ 
+let gameSpeed = 1; // setter farten på hindre til en starthastighet
+const speedIncreaseRate = 0.00005; //øker farten med 0.0005 sek
+ 
 // *Spiller*
 const player = {
   x: Math.floor(W * 0.25), // Spillerens plassering på canvaset (x-aksen)
@@ -21,14 +25,14 @@ const player = {
   under: false,     // dykker (hold nede pil ned/S)
   canJump: true
 };
-
+ 
 // Enkle skyer (for litt liv i bakgrunnen).     ta bort!!!!!
 const clouds = Array.from({length: 4}).map(() => ({
   x: Math.random() * W,
   y: 20 + Math.random() * 120,
   s: 0.4 + Math.random() * 0.6
 }));
-
+ 
 // *Hindre*
 // type: 'float' (på vann) eller 'air' (fugl).
 const obstacles = [];
@@ -36,20 +40,20 @@ let spawnTimer = 0;          // teller ned til neste hinder
 let score = 0;
 let running = false;
 let gameIsOver = false;
-
+ 
 // --- Overlay og UI
 const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
-
+ 
 console.log('game-simple.js loaded');
 btnStart.addEventListener('click', start);
-
+ 
 // *Input gjennom tastaturet*
 const keys = {};
 window.addEventListener('keydown', (e) => {
   keys[e.code] = true;
-
+ 
   // Hopp -> Pil opp, W eller mellomrom
   if ((e.code === 'KeyW' || e.code === 'ArrowUp') && !player.under) {
     tryJump();
@@ -65,7 +69,9 @@ window.addEventListener('keyup', (e) => {
     player.under = false;
   }
 });
-
+ 
+ 
+ 
 function start() {
   // Reset
   score = 0;
@@ -73,18 +79,19 @@ function start() {
   spawnTimer = 0;
   gameIsOver = false;
   running = true;
-
+  gameSpeed = 1;
+ 
   // nulstiller score
   scoreEl.textContent = score.toString();
-
+ 
   requestAnimationFrame(loop); // looper bakgrunn
 }
-
+ 
 function end() {
-  running = false; 
+  running = false;
   gameIsOver = true;
 }
-
+ 
 // --- Enkel hoppelogikk
 function tryJump() {
   // Kan hoppe hvis vi står i overflata (ikke under)
@@ -94,17 +101,17 @@ function tryJump() {
     player.canJump = false;
   }
 }
-
+ 
 // *funksjon for kollisjon -> Spiller(a) og Hinder(b)
 function hit(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
-
+ 
 // --- Lage nye hindre med enkel, jevn frekvens
 function spawnObstacle() {
   // 65% sjanse på flytende, 35% på fugl
   const type = Math.random() < 0.65 ? 'float' : 'air';
-
+ 
   if (type === 'float') {
     // Flytende hindring ved overflate (gjør hitboksen litt dypere)
     const w = 36 + Math.random() * 20;
@@ -118,20 +125,20 @@ function spawnObstacle() {
     obstacles.push({ type, x: W + 10, y, w, h, speed: 5 });
   }
 }
-
+ 
 // --- Spill-løkke
 let last = 0;
 function loop(now) {
   if (!running) return;
   const dt = Math.min(50, now - last); // ms
   last = now;
-
+ 
   update(dt);
   draw();
-
+ 
   requestAnimationFrame(loop);
 }
-
+ 
 // --- Oppdater alt
 function update(dt) {
   // Skyer
@@ -139,7 +146,7 @@ function update(dt) {
     c.x -= c.s * 0.6;
     if (c.x < -120) { c.x = W + 60; c.y = 20 + Math.random()*120; }
   });
-
+ 
   // Spiller – enkel fysikk
   if (player.under) {
     const target = riverY + 18; // litt under overflata
@@ -149,7 +156,7 @@ function update(dt) {
   } else {
     player.vy += gravity;
     player.y += player.vy;
-
+ 
     // Ikke falle under overflata
     const surfaceY = riverY - player.h;
     if (player.y > surfaceY) {
@@ -157,7 +164,7 @@ function update(dt) {
       player.vy = 0;
       player.canJump = true;
     }
-
+ 
     // Maks hopphøyde (for enkelhet)
     const minY = H * 0.22;
     if (player.y < minY) {
@@ -165,31 +172,31 @@ function update(dt) {
       player.vy = 0.4;
     }
   }
-
+ 
   // Hindre – beveg, fjern, tell poeng, sjekk treff
   spawnTimer -= dt;
   if (spawnTimer <= 0) {
     spawnObstacle();
-    spawnTimer = 1000; // nytt hinder ca. hver 0.9 sek
+    spawnTimer = 1000; // nytt hinder ca. hver 1.0 sek
   }
-
+ 
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
-    o.x -= o.speed;
-
+    o.x -= o.speed * gameSpeed;
+ 
     // Score når hindret passerer spilleren
     if (!o.scored && o.x + o.w < player.x) {
       o.scored = true;
       score += 5;
       scoreEl.textContent = score.toString();
     }
-
+ 
     // Fjern utenfor skjerm
     if (o.x + o.w < -10) {
       obstacles.splice(i, 1);
       continue;
     }
-
+ 
     // Kollisjon
     const overlap = hit(player.x, player.y, player.w, player.h, o.x, o.y, o.w, o.h);
     if (overlap) {
@@ -200,8 +207,10 @@ function update(dt) {
       }
     }
   }
+ 
+  gameSpeed += speedIncreaseRate * dt;
 }
-
+ 
 // --- Tegn alt (enkel stil)
 function draw() {
   // Himmel
@@ -210,10 +219,10 @@ function draw() {
   g.addColorStop(1, '#0b1022');
   ctx2d.fillStyle = g;
   ctx2d.fillRect(0, 0, W, H);
-
+ 
   // Elv
   drawRiver();
-
+ 
   // Hindre
   obstacles.forEach(o => {
     if (o.type === 'float') {
@@ -229,11 +238,11 @@ function draw() {
       ctx2d.fill();
     }
   });
-
+ 
   // Spiller
   drawPlayer();
 }
-
+ 
 // --- Tegnehjelpere (ENKLE)
 function rect(x,y,w,h){ ctx2d.fillRect(x,y,w,h); }
 function circle(x,y,r){ ctx2d.beginPath(); ctx2d.arc(x,y,r,0,Math.PI*2); ctx2d.fill(); }
@@ -246,29 +255,29 @@ function roundRect(x,y,w,h,r){
   ctx2d.arcTo(x,   y+h, x,   y,   r);
   ctx2d.arcTo(x,   y,   x+w, y,   r);
 }
-
+ 
 function drawRiver() {
   // Vannområde
   ctx2d.beginPath();
   ctx2d.rect(0, riverY, W, H - riverY);
-
+ 
   // Farge i vannet
   const g = ctx2d.createLinearGradient(0, riverY, 0, H);
   g.addColorStop(0, '#13337a');
   ctx2d.fillStyle = g;
   ctx2d.fillRect(0, riverY, W, H - riverY);
-
+ 
 }
-
+ 
 function drawPlayer() {
   // Båtfarge
   ctx2d.fillStyle = '#f97316';
   // Båt form og størrelse
   roundRect(player.x - player.w*0.5 + player.w/2, player.y + player.h*0.6, player.w, player.h, 12);
   ctx2d.fill();
-
+ 
   // Padler (lite hode)
   ctx2d.fillStyle = '#fde68a';
   circle(player.x + player.w*0.2, player.y, 6);
-
+ 
 }

@@ -51,4 +51,8 @@ button {
 }
 button:hover { filter: brightness(1.1); }
 
+.seagull {
 
+  width: 32px;
+  height: 32px;
+}
