@@ -8,11 +8,11 @@ const W = canvas.width;
 const H = canvas.height;
  
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
-const gravity = 0.6;                   // tyngdekraft
+const gravity = 1;                   // tyngdekraft
 const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
 
 
-let gameSpeed = 1; // setter farten på hindre til en starthastighet
+let gameSpeed = 1.2; // setter farten på hindre til en starthastighet
 const speedIncreaseRate = 0.00005; //øker farten med 0.00005 sek
 
 // *Spiller*
