@@ -1,6 +1,6 @@
 // ======== ENKEL 2D RUNNER ========
 // Mål: superenkel, lett å lese, få konsepter.
- 
+
 // --- Canvas og grunnverdier
 const canvas = document.getElementById('game');
 const ctx2d = canvas.getContext('2d'); // canvas element for å tegne grafikk, tekst og bilder i spillet
@@ -45,10 +45,10 @@ let gameIsOver = false;
 const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
- 
+
 console.log('game-simple.js loaded');
 btnStart.addEventListener('click', start);
- 
+
 // *Input gjennom tastaturet*
 const keys = {};
 window.addEventListener('keydown', (e) => {
@@ -79,8 +79,7 @@ function start() {
   spawnTimer = 0;
   gameIsOver = false;
   running = true;
-  gameSpeed = 1;
- 
+
   // nulstiller score
   scoreEl.textContent = score.toString();
  
@@ -91,7 +90,7 @@ function end() {
   running = false;
   gameIsOver = true;
 }
- 
+
 // --- Enkel hoppelogikk
 function tryJump() {
   // Kan hoppe hvis vi står i overflata (ikke under)
@@ -281,3 +280,11 @@ function drawPlayer() {
   circle(player.x + player.w*0.2, player.y, 6);
  
 }
+
+
+
+
+  
+
+
+

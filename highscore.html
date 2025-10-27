@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nidelven Rush – Highscore</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      text-align: center;
+      color: #e5e7eb;
+      background: #0b1022;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      color: #f97316;
+      margin-top: 1em;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      max-width: 400px;
+      margin: 2em auto;
+    }
+
+    li {
+      background: #1f2937;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #334155;
+    }
+
+    li:nth-child(1) { border-left: 6px solid gold; }
+    li:nth-child(2) { border-left: 6px solid silver; }
+    li:nth-child(3) { border-left: 6px solid #cd7f32; }
+
+    .navn {
+      font-weight: bold;
+      color: #facc15;
+    }
+
+    button, a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #f97316;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:hover, a:hover {
+      background-color: #ea580c;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Topp 3 resultater</h1>
+  <ul id="bestetider"></ul>
+
+  <button id="resetTider">Nullstill resultater</button>
+  <a href="index.html">Tilbake til spill</a>
+
+  <script>
+    const liste = document.getElementById("bestetider");
+    let bestResults = JSON.parse(localStorage.getItem("bestResults")) || [];
+
+    // Sorter slik at høyest tid kommer øverst
+    bestResults.sort((a, b) => b.tid - a.tid);
+
+    function vis() {
+      liste.innerHTML = "";
+      if (bestResults.length === 0) {
+        liste.innerHTML = "<li>Ingen resultater lagret enda</li>";
+        return;
+      }
+
+      bestResults.forEach((res, i) => {
+        liste.innerHTML += `
+          <li>
+            <span class="navn">${i + 1}. ${res.navn}</span>
+            <span>${res.tid.toFixed(2)} sek</span>
+            <span>Poeng: ${res.score}</span>
+          </li>`;
+      });
+    }
+
+    vis();
+
+    document.getElementById("resetTider").addEventListener("click", () => {
+      localStorage.removeItem("bestResults");
+      bestResults = [];
+      vis();
+    });
+  </script>
+</body>
+</html>
