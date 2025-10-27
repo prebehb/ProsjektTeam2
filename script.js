@@ -1,5 +1,9 @@
 // ======== ENKEL 2D RUNNER ========
 // Mål: superenkel, lett å lese, få konsepter.
+const startCard = document.getElementById("startCard");
+const endCard = document.getElementById("endCard");
+const lagreKnapp = document.getElementById("lagreTidKnapp");
+console.log(startCard, endCard, lagreKnapp);
 
 // --- Canvas og grunnverdier
 const canvas = document.getElementById('game');
@@ -9,7 +13,10 @@ const H = canvas.height;
 
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
 const gravity = 0.6;                   // tyngdekraft
-const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
+const jumpForce = 12;   
+
+
+let startTid=0;// Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
 
 // *Spiller*
 const player = {
@@ -41,10 +48,17 @@ let gameIsOver = false;
 const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
-
-console.log('game-simple.js loaded');
-btnStart.addEventListener('click', start);
-
+btnStart.addEventListener('click', () => {
+  startCard.style.display = "none";    // Skjul startkort
+  endCard.style.display = "none";      // Sørg for at sluttkort er skjult
+  score = 0;
+  scoreEl.textContent = score;
+  obstacles.length = 0;
+  spawnTimer = 0;
+  running = true;   
+  startTid = Date.now();  
+  requestAnimationFrame(loop);
+});
 // *Input gjennom tastaturet*
 const keys = {};
 window.addEventListener('keydown', (e) => {
@@ -73,6 +87,7 @@ function start() {
   spawnTimer = 0;
   gameIsOver = false;
   running = true;
+  startTid = Date.now();
 
   // nulstiller score
   scoreEl.textContent = score.toString();
@@ -83,7 +98,53 @@ function start() {
 function end() {
   running = false; 
   gameIsOver = true;
+  spillFerdig();
 }
+
+function spillFerdig() {
+  running = false;
+  const sluttTid = (Date.now() - startTid) / 1000;
+
+  // Vis sluttkort
+  endCard.style.display = "flex";
+
+  // Lagre-knapp logikk
+  lagreKnapp.onclick = () => {
+    const navn = prompt("Skriv inn navnet ditt:");
+    if (!navn) return;
+
+    const resultat = { tid: sluttTid, score, navn };
+
+    let bestResults = JSON.parse(localStorage.getItem("bestResults")) || [];
+
+    // Sorter slik at høyest tid kommer først
+    bestResults.sort((a, b) => b.tid - a.tid);
+
+    if (bestResults.length < 3) {
+      // Fyll opp hvis færre enn 3
+      bestResults.push(resultat);
+    } else {
+      // Sjekk om ny tid er bedre enn dårligste (den siste i lista)
+      const dårligste = bestResults[bestResults.length - 1];
+      if (resultat.tid > dårligste.tid) {
+        // Bytt ut dårligste
+        bestResults[bestResults.length - 1] = resultat;
+      } else {
+        alert("Resultatet er ikke blant topp 3 – ble ikke lagret.");
+        return;
+      }
+    }
+
+    // Sorter på nytt slik at høyest tid kommer øverst og behold topp 3
+    bestResults.sort((a, b) => b.tid - a.tid);
+    bestResults = bestResults.slice(0, 3);
+
+    localStorage.setItem("bestResults", JSON.stringify(bestResults));
+    alert("✅ Resultatet ditt er lagret! Klikk 'Se highscore' for å se topp 3.");
+  };
+}
+
+
 
 // --- Enkel hoppelogikk
 function tryJump() {
@@ -272,3 +333,11 @@ function drawPlayer() {
   circle(player.x + player.w*0.2, player.y, 6);
 
 }
+
+
+
+
+  
+
+
+

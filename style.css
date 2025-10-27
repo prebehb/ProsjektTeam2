@@ -52,3 +52,24 @@ button {
 button:hover { filter: brightness(1.1); }
 
 
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,.5);
+  z-index: 50; /* dekker canvas */
+}
+
+#endCard {
+  display: none;   /* start skjult */
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
