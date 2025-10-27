@@ -10,19 +10,11 @@ const H = canvas.height;
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
 const gravity = 0.6;                   // tyngdekraft
 const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
-<<<<<<< Updated upstream
- 
- 
-let gameSpeed = 1; // setter farten på hindre til en starthastighet
-const speedIncreaseRate = 0.00005; //øker farten med 0.0005 sek
- 
-=======
 
 
 let gameSpeed = 1; // setter farten på hindre til en starthastighet
 const speedIncreaseRate = 0.00005; //øker farten med 0.00005 sek
 
->>>>>>> Stashed changes
 // *Spiller*
 const player = {
   x: Math.floor(W * 0.25), // Spillerens plassering på canvaset (x-aksen)
@@ -77,15 +69,9 @@ window.addEventListener('keyup', (e) => {
     player.under = false;
   } 
 });
-<<<<<<< Updated upstream
  
  
  
-=======
-
-
-
->>>>>>> Stashed changes
 function start() {
   // Reset
   score = 0;
@@ -94,11 +80,7 @@ function start() {
   gameIsOver = false;
   running = true;
   gameSpeed = 1;
-<<<<<<< Updated upstream
  
-=======
-
->>>>>>> Stashed changes
   // nulstiller score
   scoreEl.textContent = score.toString();
  
@@ -201,11 +183,7 @@ function update(dt) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
     o.x -= o.speed * gameSpeed;
-<<<<<<< Updated upstream
- 
-=======
 
->>>>>>> Stashed changes
     // Score når hindret passerer spilleren
     if (!o.scored && o.x + o.w < player.x) {
       o.scored = true;
@@ -229,11 +207,7 @@ function update(dt) {
       }
     }
   }
-<<<<<<< Updated upstream
  
-=======
-
->>>>>>> Stashed changes
   gameSpeed += speedIncreaseRate * dt;
 }
  
