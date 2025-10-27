@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nidelven Rush_Enkel</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
   <h1>Nidelven rush</h1>
@@ -12,24 +13,14 @@
 
   <div class="game-wrap">
     <canvas id="game" width="900" height="420"></canvas>
-<div id="overlay">
-  <div class="card" id="startCard">
-    <h2>Nidelven Rush</h2>
-    <p>Unngå hindrene!<br>— Hopp over det som flyter på vannet<br>— Dykk under fuglene</p>
-    <button id="btnStart">Start</button>
-  </div>
 
-  <div class="card" id="endCard" style="display:none; flex-direction: column; align-items: center;">
-    <h2>Spillet er ferdig!</h2>
-    <button id="lagreTidKnapp">Lagre resultat</button>
-    <a href="highscore.html" id="seHighscore">Se highscore</a>
-  </div>
-</div>
-
-
-
-<!-- Ny knapp-container -->
-
+    <div id="overlay">
+      <div class="card">
+        <h2>Nidelven Rush</h2>
+        <p>Unngå hindrene!<br>— Hopp over det som flyter på vannet<br>— Dykk under fuglene</p>
+        <button id="btnStart">Start</button>
+      </div>
+    </div>
 
     <div class="hud">
       <div>Poeng: <span id="score">0</span></div>
@@ -38,4 +29,4 @@
 
   <script defer src="script.js"></script>
 </body>
-</html>
+</html> 
