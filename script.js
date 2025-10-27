@@ -67,7 +67,7 @@ window.addEventListener('keyup', (e) => {
   keys[e.code] = false;
   if (e.code === 'ArrowDown' || e.code === 'KeyS') {
     player.under = false;
-  }
+  } 
 });
  
  
