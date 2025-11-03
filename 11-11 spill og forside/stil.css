@@ -1,0 +1,126 @@
+.press-start-2p-regular {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+    cursor: url('pointer3.png'), auto;
+    background-image: url(bakgrunnCSS.png);
+
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.overskrift{
+    background-color: none;
+    color: white;
+    font-size: 72px;
+
+    flex-grow: 5;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+#bartCity {
+    transition: transform 0.4s ease;
+}
+
+
+.meny{
+    background-color: none;
+
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+button{
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+
+    border: none;
+    background-color: transparent;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 50%;
+}
+
+button:hover{
+    cursor: url('pointer-klikk3.png'), auto;
+    color: rgb(209, 209, 209);
+}
+
+
+#hvordan-boks{
+    background-color: #132734a1;
+    color: white;
+    display: none;
+    width: 800px;
+    height: 400px;
+
+    position: absolute;
+    top: 25%;
+    left: 9%;
+}
+
+.stilHvordan{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hvordanTekst{
+    width: 500px;
+}
+
+.keyboardAnim {
+    width: 497px;
+    height: 176px;
+    background-size: cover;
+    background-position: center;
+    animation: switchBackground 2s infinite;
+}
+
+@keyframes switchBackground {
+    0%, 50% {
+        background-image: url('keyboard1.png');
+    }
+    50%, 100% {
+        background-image: url('keyboard2.png');
+    }
+}
+
+
+#gameCanvas{
+    position: absolute;
+    top: 25%;
+    left: 9%;
+
+    background-image: url(bakgrunn_natt.png);
+    border:2px solid #8b8579;
+
+    display: block;
+}
+
+#scoreCanvas{
+    position: absolute;
+    top: 25%;
+    left: 9%;
+
+    background-color: lightseagreen;
+
+    display: block;
+}

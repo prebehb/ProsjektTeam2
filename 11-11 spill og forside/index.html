@@ -1,0 +1,47 @@
+<html>
+    <head lang="en">
+        <title>Bart City</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="stil.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <script src = "script.js"> </script>
+    </head>
+    <body>
+        <div class="overskrift">
+            <p id="bartCity">Bart City</p>
+        </div>
+
+        <div class="meny">
+            <button class="hoverLyd" id="viseCanvas">spill</button>
+            <button class="hoverLyd" id="hvordan-knapp">hvordan</button>
+            <button class="hoverLyd" id="highScore">high score</button>
+            <button class="hoverLyd" id="avsluttSpillet">avslutt spillet</button>
+        </div>
+
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+		
+		<script src="spill.js"></script>
+
+        <div id="hvordan-boks">
+            <div class="stilHvordan">
+                <div class="hvordanTekst">
+                    <br>
+                    <p>Du befinner deg i hjerte av Bart City etter en utrolig kveld. Det eneste som står igjen nå er å komme seg helskinnet hjem. </p>
+                    <p>Dette gjør du ved å hoppe over hinderene med space-knappen eller opp-pilen</p>
+                </div>
+                <div class="keyboardAnim"></div>
+            </div>
+        </div>
+
+        <canvas id="scoreCanvas" width="800" height="400"></canvas>
+
+        <audio id="hoverSound" src="klink4.mp3" preload="auto"></audio>
+        <audio id="klikkSound" src="klink3.mp3" preload="auto"></audio>
+		<audio id="menuMusic" src="nu_klinger.mp3" preload="auto" loop></audio>
+
+		
+    </body>
+</html>
