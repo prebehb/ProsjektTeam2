@@ -49,7 +49,7 @@ button {
   font-weight: 700;
   cursor: pointer;
 }
-button:hover { filter: brightness(1.1); }
+button:hover { filter: brightness(1.1); 
 
 #endCard {
   display: none;

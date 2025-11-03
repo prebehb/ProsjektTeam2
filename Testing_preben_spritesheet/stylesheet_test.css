@@ -1,3 +1,9 @@
+body {
+    background-color: rgb(60, 134, 158);
+}
+
+
+
 :root {
     --pixel-size: 6; 
 }
@@ -6,22 +12,27 @@ body {
   background-color: rgb(60, 134, 158);
 }
 
-.seagull_spritesheet {
-    animation: moveSpritesheet 1s steps(3) infinite;
-}
-
 .seagull {
-  width: 50px;
-  height: 50px;
+  width: calc(50px * var(--pixel-size));
+  height: calc(50px * var(--pixel-size));
   background: rgb(255, 0, 0);
   overflow: hidden;
 }
 
+
+.pixelart {
+    image-rendering: pixelated;
+}
+
+.seagull_spritesheet {
+  width: calc(150px * var(--pixel-size)); /* 3 frames across */
+  height: calc(100px * var(--pixel-size)); /* total height of spritesheet */
+  animation: moveSpritesheet 1s steps(3) infinite;
+}
+
 @keyframes moveSpritesheet {
-        from {
-            transform: translate3d(0px, 0, 0);
-        }
-        to {
-            transform: translate3d(-100%, 0, 0);
-        }
-    }
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(-100%, 0, 0); } /* move through top row */
+  50.01% { transform: translate3d(0, -50%, 0); } /* jump to bottom row */
+  100% { transform: translate3d(-100%, -50%, 0); } /* move through bottom row */
+}
