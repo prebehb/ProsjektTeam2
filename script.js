@@ -87,8 +87,45 @@ function start() {
 }
  
 function end() {
-  running = false;
-  gameIsOver = true;
+ running = false; 
+ gameIsOver = true;
+ spillFerdig();
+}
+
+// ############# funker ikke #############
+function spillFerdig() {
+ running = false;
+ const sluttTid = (Date.now() - startTid) / 1000;
+ // Vis sluttkort
+ endCard.style.display = "flex";
+ // Lagre-knapp logikk
+ lagreKnapp.onclick = () => {
+   const navn = prompt("Skriv inn navnet ditt:");
+   if (!navn) return;
+   const resultat = { tid: sluttTid, score, navn };
+   let bestResults = JSON.parse(localStorage.getItem("bestResults")) || [];
+   // Sorter slik at høyest tid kommer først
+   bestResults.sort((a, b) => b.tid - a.tid);
+   if (bestResults.length < 3) {
+     // Fyll opp hvis færre enn 3
+     bestResults.push(resultat);
+   } else {
+     // Sjekk om ny tid er bedre enn dårligste (den siste i lista)
+     const dårligste = bestResults[bestResults.length - 1];
+     if (resultat.tid > dårligste.tid) {
+       // Bytt ut dårligste
+       bestResults[bestResults.length - 1] = resultat;
+     } else {
+       alert("Resultatet er ikke blant topp 3 – ble ikke lagret.");
+       return;
+     }
+   }
+   // Sorter på nytt slik at høyest tid kommer øverst og behold topp 3
+   bestResults.sort((a, b) => b.tid - a.tid);
+   bestResults = bestResults.slice(0, 3);
+   localStorage.setItem("bestResults", JSON.stringify(bestResults));
+   alert("✅ Resultatet ditt er lagret! Klikk 'Se highscore' for å se topp 3.");
+ };
 }
 
 // --- Enkel hoppelogikk
