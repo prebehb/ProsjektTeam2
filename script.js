@@ -1,6 +1,6 @@
 // ======== ENKEL 2D RUNNER ========
 // Mål: superenkel, lett å lese, få konsepter.
-
+ 
 // --- Canvas og grunnverdier
 const canvas = document.getElementById('game');
 const ctx2d = canvas.getContext('2d'); // canvas element for å tegne grafikk, tekst og bilder i spillet
@@ -8,13 +8,13 @@ const W = canvas.width;
 const H = canvas.height;
  
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
-const gravity = 1;                   // tyngdekraft
+const gravity = 0.6;                   // tyngdekraft
 const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
-
-
-let gameSpeed = 1.2; // setter farten på hindre til en starthastighet
-const speedIncreaseRate = 0.00005; //øker farten med 0.00005 sek
-
+ 
+ 
+let gameSpeed = 1; // setter farten på hindre til en starthastighet
+const speedIncreaseRate = 0.00005; //øker farten med 0.05 sek
+ 
 // *Spiller*
 const player = {
   x: Math.floor(W * 0.25), // Spillerens plassering på canvaset (x-aksen)
@@ -45,10 +45,10 @@ let gameIsOver = false;
 const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
-
+ 
 console.log('game-simple.js loaded');
 btnStart.addEventListener('click', start);
-
+ 
 // *Input gjennom tastaturet*
 const keys = {};
 window.addEventListener('keydown', (e) => {
@@ -67,7 +67,7 @@ window.addEventListener('keyup', (e) => {
   keys[e.code] = false;
   if (e.code === 'ArrowDown' || e.code === 'KeyS') {
     player.under = false;
-  } 
+  }
 });
  
  
@@ -79,7 +79,8 @@ function start() {
   spawnTimer = 0;
   gameIsOver = false;
   running = true;
-
+  gameSpeed = 1;
+ 
   // nulstiller score
   scoreEl.textContent = score.toString();
  
@@ -90,7 +91,7 @@ function end() {
   running = false;
   gameIsOver = true;
 }
-
+ 
 // --- Enkel hoppelogikk
 function tryJump() {
   // Kan hoppe hvis vi står i overflata (ikke under)
@@ -182,7 +183,7 @@ function update(dt) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
     o.x -= o.speed * gameSpeed;
-
+ 
     // Score når hindret passerer spilleren
     if (!o.scored && o.x + o.w < player.x) {
       o.scored = true;
@@ -280,11 +281,3 @@ function drawPlayer() {
   circle(player.x + player.w*0.2, player.y, 6);
  
 }
-
-
-
-
-  
-
-
-
