@@ -3,38 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nidelven Rush_Enkel</title>
+  <title>Nidelven Rush</title>
+
   <link rel="stylesheet" href="styles.css">
+
+
   <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Nidelven rush</h1>
+  <h1>Nidelven Rush</h1>
   <p>Hopp: <kbd>Pil opp</kbd>/<kbd>W</kbd> · Dykk (hold): <kbd>Pil ned</kbd>/<kbd>S</kbd></p>
 
   <div class="game-wrap">
     <canvas id="game" width="900" height="420"></canvas>
 
+    <!-- Start overlay -->
     <div id="overlay">
       <div class="card">
         <h2>Nidelven Rush</h2>
-        <p>Unngå hindrene!<br>— Hopp over det som flyter på vannet<br>— Dykk under fuglene</p>
+        <p>
+          Unngå hindrene!<br>
+          — Hopp over det som flyter på vannet<br>
+          — Dykk under fuglene
+        </p>
         <button id="btnStart">Start</button>
       </div>
     </div>
 
+    <!-- HUD (poeng underveis i spill) -->
     <div class="hud">
       <div>Poeng: <span id="score">0</span></div>
     </div>
-    <!-- funker ikke
-  <div class="card" id="endCard" style="display:none; flex-direction: column; align-items: center;">
-    <h2>Spillet er ferdig!</h2>
-    <button id="lagreTidKnapp">Lagre resultat</button>
-    <a href="highscore.html" id="seHighscore">Se highscore</a>
-  </div>
-  -->
   </div>
 
+  <!-- POP-UP når spillet er ferdig -->
+  <div id="endCard" class="hidden">
+    <h3>Spillet er ferdig!</h3>
+    <button id="saveScoreBtn">Lagre resultat</button>
+    <br>
+    <a href="highscore.html">Se highscore</a>
+  </div>
 
-  <script defer src="script.js"></script>
 </body>
-</html> 
+</html>

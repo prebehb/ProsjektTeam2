@@ -51,7 +51,23 @@ button {
 }
 button:hover { filter: brightness(1.1); }
 
+#endCard {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  background: #0b1022;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
+}
 
-  width: 32px;
-  height: 32px;
+#endCard.show {
+  display: block;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
