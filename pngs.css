@@ -2,10 +2,6 @@
     --pixel-size: 6; 
 }
 
-body {
-  background-color: rgb(60, 134, 158);
-}
-
 .seagull {
   width: calc(50px * var(--pixel-size));
   height: calc(50px * var(--pixel-size));
@@ -30,4 +26,3 @@ body {
   50.01% { transform: translate3d(0, -50%, 0); } /* jump to bottom row */
   100% { transform: translate3d(-100%, -50%, 0); } /* move through bottom row */
 }
-

@@ -246,7 +246,7 @@ viseCanvasKnapp.addEventListener('click', () => {
 // Nullstill spillet
 function resetGame() {
     isGameOver = false;
-    obstacles = [];
+    obstacles = []; 
     score = 0;
     player.y = canvas.height - player.height - 20;
     player.dy = 0;

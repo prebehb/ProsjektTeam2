@@ -1,0 +1,250 @@
+/* farger */
+:root{
+  --bg-dark:   #3f3f3f;   /* toppen */
+  --bg-page:   #6a6a6a;   /* bakgrunn */
+  --frame:     #404040;   /* ramme rundt bilde */
+  --white:     #ffffff;
+  --purple:    #b892ff;   /* "NIDELVEN" */
+  --cyan:      #8ad0ff;   /* "RUSH" og lenker i hamburger meny */
+  --overlay:   rgba(0,0,0,.65); /* bakgrunnsskygge ved åpen meny */
+  --text:      #e9e9e9;
+
+  /* Start-knapp */
+  --btn-fill:        #020202; 
+  --btn-border:      #18171e; 
+  --btn-inner:       #0a0b0a;
+}
+
+.scr { font-family: "VT323", ui-monospace, monospace; }
+.font-title { letter-spacing: .06em; }
+.bg-site { background: var(--bg-page); color: var(--text); }
+
+.site-header {
+  background: var(--bg-dark);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.topbar{
+  display: grid;
+  grid-template-columns: 48px 1fr 48px; /* base (mobil/tablet) */
+  min-height: 54px;
+}
+
+.hamburger{
+  background: transparent; border:0; width:44px; height:36px; padding:0;
+  display:grid; gap:5px; align-content:center; justify-self:start; cursor:pointer;
+}
+.hamburger span{
+  height:3px; background:#bdbdbd; display:block; border-radius:2px;
+}
+
+/* navigasjon */
+.topnav{
+  justify-self: center;
+  display: flex; gap: min(9vw, 90px);
+}
+.topnav a{
+  color: var(--cyan);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 4px 6px;
+}
+.topnav a:hover{
+  opacity: .9;
+  text-decoration: underline;
+}
+
+.spacer{ width:48px }
+
+.brand-wrap{ padding-block: 10px 12px; text-align:center }
+.brand{ margin:0; font-size: clamp(28px, 4.6vw, 48px) }
+.brand-purple{ color: var(--purple) }
+.brand-cyan{ color: var(--cyan) }
+
+.drawer{
+  position: fixed; inset: 0;
+  display: none;
+  z-index: 1000; 
+}
+/* Endret fra .drawer.open til .drawer.show (Bootstrap collapse) */
+.drawer.show{ display:block }
+
+/* Bakgrunnsskygge */
+.drawer .backdrop{
+  position: fixed; inset: 0;
+  background: var(--overlay);
+  z-index: 1000;
+}
+
+/* selve menyen */
+.drawer .panel{
+  position: fixed; left:0; top:0; bottom:0;
+  width: min(80vw, 360px);
+  background:#5b5b5b; color: var(--text);
+  border-right: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,.4);
+  z-index: 1001; 
+}
+
+.drawer-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.brand-sm{ font-size: 20px; letter-spacing:.06em }
+.close-x{ background:transparent; border:0; color:#d7d7d7; font-size:28px; cursor:pointer }
+.drawer-links{ padding: 8px 10px; display:grid; gap: 6px }
+.drawer-links a{
+  display:block; padding: 10px 12px;
+  color: var(--cyan); text-decoration:none; border-radius: 8px;
+}
+.drawer-links a:hover{ background: rgba(255,255,255,.05) }
+
+
+.stage{ display:block; margin: 10px auto 20px }
+.stage-inner{
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  background: var(--white);
+  border: 14px solid var(--frame);
+  box-shadow: 0 8px 0 rgba(0,0,0,.25);
+  overflow: hidden; 
+}
+
+.stage-bg{
+  position:absolute; inset:0;
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated; 
+}
+.start-btn{
+  --px: 6px;
+
+  position: absolute; left:50%; bottom: 12%;
+  transform: translateX(-50%);
+  text-decoration: none;
+  color: #ffffff;
+  font-size: clamp(18px, 2.7vw, 30px);
+  letter-spacing: .05em;
+
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+
+  background: var(--btn-fill);
+
+  padding: 16px 42px;
+  border-radius: 9999px;
+
+  box-shadow:
+    inset 0 0 0 3px var(--btn-inner);
+
+  animation: btn-bounce 1.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.start-btn::before{
+  content:"";
+  position:absolute;
+  inset: -8px;                 
+  border-radius: 9999px;
+  background: var(--btn-border);
+  z-index: -1;
+}
+
+.start-btn:hover{
+  filter: brightness(1.02);
+  animation-play-state: paused;      
+}
+.start-btn:active{
+  transform: translateX(-50%) translateY(2px);
+}
+
+@keyframes btn-bounce{
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .start-btn{ animation: none; }
+}
+
+.h2{
+  font-size: clamp(18px, 2.6vw, 24px);
+  margin-bottom: 10px;
+}
+.card-plain{
+  background: #5f5f5f; color: #f3f3f3;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 16px;
+}
+.site-footer{
+  text-align:center;
+  padding: 22px 0;
+  color: #d0d0d0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* --- Kun dette er nytt for collapse-visning --- */
+@media (max-width: 991.98px){
+  .topnav{ display: none !important; }      /* skjul topp-lenker på mobil */
+  .hamburger{ display: grid !important; }   /* vis burger på mobil */
+}
+
+/* === Desktop: midtstill topplenkene nøyaktig === */
+@media (min-width: 992px){
+  .hamburger{ display: none !important; }        /* skjul burger på desktop */
+  .drawer{ display: none !important; }           /* skjul drawer helt på desktop */
+  .topnav{ display: flex !important; }           /* vis topp-lenker på desktop */
+
+  /* 3-kol grid hvor midtkolonnen er auto-bredde (innholdet), flankert av fleksible kolonner */
+  .topbar{
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;         /* <-- nøkkelen for perfekt sentrering */
+    align-items: center;
+    padding-inline: 12px;
+  }
+
+  /* Nav-feltet plasseres i midtkolonnen og sentreres */
+  .topnav{
+    justify-self: center !important;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(24px, 6vw, 90px);
+    flex-wrap: nowrap;                            /* ingen linjebryting */
+    max-width: 100%;
+  }
+
+  /* Forhindre at lenker bryter og forskyver layout */
+  .topnav a{
+    white-space: nowrap;
+  }
+
+  /* Høyresiden “puster” – ikke lås til 48px */
+  .spacer{ width: auto; }
+}
+/* Desktop: tvangssentrer topplenkene optisk midt i topplinja */
+@media (min-width: 992px){
+  .topbar{
+    position: relative;                /* anker for absolutt posisjonering */
+    display: grid !important;
+    grid-template-columns: 48px 1fr 48px; /* hva du vil her – påvirker ikke midtstillinga */
+    align-items: center;
+    padding-inline: 12px;
+  }
+
+  .topnav{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);  /* ekte midtpunkt */
+    display: flex !important;
+    gap: clamp(24px, 6vw, 90px);
+    white-space: nowrap;
+  }
+
+  .hamburger{ display: none !important; }
+  .drawer{ display: none !important; }
+}
