@@ -26,7 +26,7 @@ const H = canvas.height;
  
 const riverY = Math.floor(H * 0.62);   // Hvor vannets overflate starter
 const gravity = 0.8;                   // tyngdekraft
-const jumpForce = 12;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
+const jumpForce = 15;                  // Hvor høyt spilleren hopper (Skrives med - i hoppelogikken)
  
 let gameSpeed = 1; // setter farten på hindre til en starthastighet
 const speedIncreaseRate = 0.00005; //øker farten med 0.05 sek
@@ -39,7 +39,6 @@ const player = {
   w: 44,
   h: 24,
   vy: 0,
-  //under: false,     // dykker (hold nede pil ned/S)
   canJump: true
 };
  
@@ -129,8 +128,8 @@ function end() {
 
 // --- Enkel hoppelogikk
 function tryJump() {
-  // Kan hoppe hvis vi står i overflata (ikke under)
-  const onSurface = player.y >= riverY - player.h - 0.01;
+  // Kan hoppe hvis vi står i overflata
+  const onSurface = player.y >= riverY - player.h - 0.01 ; // 0.01 er en sikkerhetsmargin som gjør at man ikke står helt på vannoverflaten. 
   if (onSurface) { // Gjør at spilleren kan hoppe når på vannoverflaten 
     player.vy = -jumpForce;
     player.canJump = false;
@@ -147,13 +146,13 @@ function hit(ax, ay, aw, ah, bx, by, bw, bh) {
 // --- Lage nye hindre med enkel, jevn frekvens
 function spawnObstacle() {
   // 70% sjanse på flytende, 30% på fugl
-  const type = Math.random() < 0.70 ? 'float' : 'air';
+  const type = Math.random() < 0.75 ? 'float' : 'air';
  
   if (type === 'float') {
     // Flytende hindring ved overflate (gjør hitboksen litt dypere)
-    const w = 36 + Math.random() * 20;
-    const h = 28;
-    const y = riverY - 14;
+    const w = 65 ; //+ Math.random() * 40 (legg til om tilfelig størelse. senk W)
+    const h = 30;
+    const y = riverY - 15; // at hinderet har sin midt på vannoverflaten. hvis -15 = 0 vil den ligge rett under 
     obstacles.push({ type, x: W + 10, y, w, h, speed: 4 });
   } 
 
@@ -170,7 +169,7 @@ function spawnObstacle() {
 let last = 0;
 function loop(now) {
   if (!running) return;
-  const dt = Math.min(50, now - last); // ms
+  const dt = Math.min(50, now - last); // ms. Setter spillet til å fungere på 20 fps?
   last = now;
  
   update(dt);
@@ -205,9 +204,22 @@ function update(dt) {
   spawnTimer -= dt;
   if (spawnTimer <= 0) {
     spawnObstacle();
-    spawnTimer = 1000 + Math.random() * 1000; // nytt hinder ca. hver 1.0 sek
-  } 
- 
+    spawnTimer = 1000 + Math.random() * 1000; // nytt hinder mellom 1.000sek - 2.000sek 
+    
+    if (score >= 500){
+      spawnTimer = 100 + Math.random() * 500; // endrer spawntid på hindere 
+    } 
+    if (score >= 300){
+      spawnTimer = 300 + Math.random() * 600; 
+    } 
+    if (score >= 200){
+      spawnTimer = 500 + Math.random() * 700; 
+    } 
+    if (score >= 100){
+      spawnTimer = 800 + Math.random() * 1000; 
+    } 
+  }
+
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
     o.x -= o.speed * gameSpeed;

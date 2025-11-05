@@ -63,7 +63,7 @@ function drawHighScores() {
 
  
   ctx.fillStyle = '#fff';
-  ctx.font = '36px Arial';
+  ctx.font = '36px Arial'; 
   ctx.textAlign = 'center';
 
   
