@@ -134,7 +134,7 @@ function update() {
     player.y += player.dy;
 
     // Kontakt med bakken
-    if (player.y + player.height >= canvas.height - 20) {
+    if (player.y + player.height >= canvas.height - 20) { 
         player.y = canvas.height - player.height - 20;
         player.dy = 0;
         player.grounded = true;
