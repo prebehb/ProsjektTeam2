@@ -1,0 +1,125 @@
+:root {
+  --bg: #0b1022; --panel: #111827; --text: #e5e7eb; --accent: #f59e0b;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+h1, p { text-align: center; margin: 12px 0; }
+
+.game-wrap {
+  width: 900px;
+  max-width: calc(100vw - 24px);
+  margin: 0 auto 24px;
+  position: relative; /* for overlayed HUD/overlay */
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  border: 1px solid #1f2937;
+  border-radius: 10px;
+}
+
+/* HUD over canvas */
+.hud{
+  position: absolute;
+  left: 12px; top: 10px;
+  margin-top: 0;
+  display: flex; gap: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,.5);
+  z-index: 6;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid #334155;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+button {
+  appearance: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.1); }
+
+#endCard {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  background: #0b1022;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
+  z-index: 7;
+}
+#endCard.show {
+  display: block;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* fallback hvis .hidden brukes i JS */
+.hidden { display: none !important; }
+
+/* ============================= */
+/* =  INNE I IFRAMEN (embedded) =*/
+/* ============================= */
+
+/* Når spillet lastes i boksen på forsiden, legger vi class="embedded" på <html>.
+   Disse reglene rydder uttrykket så canvas fyller ramma pent. */
+
+.embedded body {
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+.embedded body > h1,
+.embedded body > p {
+  display: none !important; /* vi har tittel på forsiden */
+}
+
+.embedded .game-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.embedded canvas {
+  border: none;         /* rammen kommer fra forsiden */
+  border-radius: 0;
+}
+
+/* Alltid fylle boksen perfekt (ramma på forsiden er 16:9) */
+.embedded, .embedded body, .embedded .game-wrap { height: 100% !important; }
+.embedded canvas { width: 100% !important; height: 100% !important; }

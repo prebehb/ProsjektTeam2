@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nidelven Rush</title>
+
+  <!-- Sett class="embedded" på <html> hvis spillet kjøres i iframe -->
+  <script>
+    (function(){
+      try{
+        if (window.top !== window.self) {
+          document.documentElement.classList.add('embedded');
+        }
+      }catch(e){}
+    })();
+  </script>
+
+  <!-- Viktig: eksplisitt relative stier -->
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./pngs.css">
+
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <h1>Nidelven Rush</h1>
+  <p>Hopp: <kbd>Pil opp</kbd>/<kbd>W</kbd></p>
+
+  <div class="game-wrap">
+    <canvas id="game" width="960" height="540"></canvas>
+
+    <!-- Start overlay -->
+    <div id="overlay">
+      <div class="card">
+        <h2>Nidelven Rush</h2>
+        <p>
+          Unngå hindrene!<br>
+          — Hopp (↑ / W) over det som flyter på vannet<br>
+          — Dykk under fuglene
+        </p>
+        <button id="btnStart">Start</button>
+      </div>
+    </div>
+
+    <!-- HUD (overlay på toppen av canvas) -->
+    <div class="hud">
+      <div>Poeng: <span id="score">0</span></div>
+    </div>
+  </div>
+
+  <!-- POP-UP når spillet er ferdig -->
+  <div id="endCard" class="hidden">
+    <h3>Spillet er ferdig!</h3>
+    <p>Poeng: <strong id="finalScoreText">0</strong></p>
+
+    <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+      <button id="restartBtn">Spill igjen</button>
+      <button id="saveScoreBtn">Lagre resultat</button>
+    </div>
+
+    <br>
+    <a href="highscore.html">Se highscore</a>
+  </div>
+</body>
+</html>
+
