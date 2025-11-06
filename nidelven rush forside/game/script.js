@@ -60,6 +60,8 @@ const finalScoreText = document.getElementById('finalScoreText'); // NY
 
 console.log('script.js loaded');
 
+const keys = {}; 
+
 // Tastatur (W / Pil opp) for hopp 
 window.addEventListener('keydown', (e) => {
   keys[e.code] = true; // lagrer knappen så lenge den er trykket inn
