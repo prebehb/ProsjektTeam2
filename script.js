@@ -204,7 +204,7 @@ function update(dt) {
   spawnTimer -= dt;
   if (spawnTimer <= 0) {
     spawnObstacle();
-    spawnTimer = 1000 + Math.random() * 1000; // nytt hinder mellom 1.000sek - 2.000sek 
+    spawnTimer = 1500 + Math.random() * 1000; // nytt hinder mellom 1.500sek - 2.500sek 
     
     if (score >= 500){
       spawnTimer = 100 + Math.random() * 500; // endrer spawntid på hindere 
@@ -213,12 +213,15 @@ function update(dt) {
       spawnTimer = 300 + Math.random() * 600; 
     } 
     if (score >= 200){
-      spawnTimer = 500 + Math.random() * 700; 
+      spawnTimer = 500 + Math.random() * 800; 
     } 
     if (score >= 100){
-      spawnTimer = 800 + Math.random() * 1000; 
+      spawnTimer = 800 + Math.random() * 800; 
     } 
-  }
+    if (score >= 50){
+      spawnTimer = 1000 + Math.random() * 1000; 
+    } 
+  } 
 
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];

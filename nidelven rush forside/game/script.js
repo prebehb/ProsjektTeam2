@@ -25,7 +25,7 @@ const H = canvas.height;
 
 const riverY = Math.floor(H * 0.62); // vannets overflate
 const gravity = 0.8;                 // tyngdekraft
-const jumpForce = 12;                // hoppstyrke
+const jumpForce = 15;                // hoppstyrke
 
 let gameSpeed = 1;                   // starthastighet på hindre
 const speedIncreaseRate = 0.00005;   // fartsøkning per ms
@@ -62,8 +62,9 @@ console.log('script.js loaded');
 
 // Tastatur (W / Pil opp) for hopp 
 window.addEventListener('keydown', (e) => {
+  keys[e.code] = true; // lagrer knappen så lenge den er trykket inn
   if (e.code === 'KeyW' || e.code === 'ArrowUp') {
-    e.preventDefault();
+    e.preventDefault();  // gjør at knappen som er trykket på ikke påvirker selve nettsiden
     tryJump();
   }
   // Restart via Space/Enter/R når game over 
@@ -155,11 +156,13 @@ function spawnObstacle() {
   const type = Math.random() < 0.70 ? 'float' : 'air';
 
   if (type === 'float') {
-    const w = 36 + Math.random() * 20;
-    const h = 28;
-    const y = riverY - 14;
+    const w = 65 ; //+ Math.random() * 40 (legg til om tilfelig størelse. senk W)
+    const h = 30;
+    const y = riverY - 15 ; // at hinderet har sin midt på vannoverflaten. hvis -15 = 0 vil den ligge rett under 
     obstacles.push({ type, x: W + 10, y, w, h, speed: 4 });
-  } else {
+  } 
+  
+  else { //fulg litt over vann
     const w = 28, h = 20;
     const y = riverY - 45 - Math.random() * 90;
     obstacles.push({ type, x: W + 10, y, w, h, speed: 4 });
@@ -170,7 +173,7 @@ function spawnObstacle() {
 let last = 0;
 function loop(now) {
   if (!running) return;
-  const dt = Math.min(50, now - last); // ms 
+  const dt = Math.min(33, now - last); // ms. Setter spillet til å fungere på 30 fps?
   last = now;
 
   update(dt); 
@@ -201,17 +204,34 @@ function update(dt) {
   }
 
   // Hindre 
-  spawnTimer -= dt;
+ spawnTimer -= dt;
   if (spawnTimer <= 0) {
     spawnObstacle();
-    spawnTimer = 1000 + Math.random() * 1000; // ca. hvert 1–2 sek
-  }
+    spawnTimer = 1500 + Math.random() * 1000; // nytt hinder mellom 1.500sek - 2.500sek 
+    
+    if (score >= 500){
+      spawnTimer = 100 + Math.random() * 500; // endrer spawntid på hindere 
+    } 
+    if (score >= 300){
+      spawnTimer = 300 + Math.random() * 600; 
+    } 
+    if (score >= 200){
+      spawnTimer = 500 + Math.random() * 700; 
+    } 
+    if (score >= 100){
+      spawnTimer = 800 + Math.random() * 800; 
+    } 
+    if (score >= 50){
+      spawnTimer = 1000 + Math.random() * 1000; 
+    } 
+  } 
+  
 
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
     o.x -= o.speed * gameSpeed;
 
-    // Poeng for passering 
+    // Poeng for passering av hinder
     if (!o.scored && o.x + o.w < player.x) {
       o.scored = true;
       score += 5;
@@ -224,10 +244,16 @@ function update(dt) {
       continue;
     }
 
-    // Kollisjon
-    if (hit(player.x, player.y, player.w, player.h, o.x, o.y, o.w, o.h)) {
-      end();
-      return;
+     // Kollisjon
+    const overlap = hit(player.x, player.y, player.w, player.h, o.x, o.y, o.w, o.h);
+    if (overlap) {
+      if (o.type === 'float') {
+        end(); 
+        return;
+      } else if (o.type === 'air') { 
+        end(); 
+        return; 
+      }
     }
   }
 
