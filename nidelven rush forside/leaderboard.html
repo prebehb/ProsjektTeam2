@@ -44,7 +44,6 @@
     li:nth-child(3) { border-left: 6px solid #cd7f32; }
 
     .navn {
-      font-weight: bold;
       color: #facc15;
     }
 
@@ -66,6 +65,29 @@
     .knapp:hover {
       background-color: #ea580c;
     }
+
+    .card-plain {
+      position: relative;
+      background-image: url(assets/images/ForsideBlur.png);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      color: #f3f3f3;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 16px;
+
+      overflow: hidden;
+    }
+
+    .card-plain h1 {
+      text-shadow: 
+        0 2px 0 rgba(0, 0, 0, 0.35),
+        0 6px 14px rgba(0, 0, 0, 0.35)
+        ;
+    }
+
   </style> 
 </head>
 <body class="bg-site">
