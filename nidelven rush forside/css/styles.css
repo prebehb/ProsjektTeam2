@@ -10,7 +10,7 @@
   --text:      #eb770a;
 
   /* Start-knapp */
-  --btn-fill:        #020202; 
+  --btn-fill:        #eab2b2; 
   --btn-border:      #eb770a; 
   --btn-inner:       #0a0b0a;
 }
@@ -147,7 +147,8 @@
   border-radius: 9999px;
 
   box-shadow:
-    inset 0 0 0 3px var(--btn-inner);
+    inset 0 0 0 3px var(--btn-inner),
+    0 10px 30px rgba(0,0,0,0.8);
 
   animation: btn-bounce 1.6s ease-in-out infinite;
   will-change: transform;
@@ -156,8 +157,8 @@
 .start-btn::before{
   content:"";
   position:absolute;
-  inset: -8px;                 
-  border-radius: 9999px;
+  inset: 0px;                 
+  border-radius: 20px;
   background: var(--btn-border);
   z-index: -1;
 }
@@ -192,7 +193,8 @@
 .site-footer{
   text-align:center;
   padding: 22px 0;
-  color: #d0d0d0;
+  color: #ffffff;
+  text-shadow: #000000 0 1px 4px;
   border-top: 1px solid rgba(255,255,255,.08);
 }
 

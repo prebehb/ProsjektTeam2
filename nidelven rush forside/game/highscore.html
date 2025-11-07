@@ -4,17 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nidelven Rush – Highscore</title>
-  
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
   <style>
     body {
       text-align: center;
       color: #e5e7eb;
       background: #0b1022;
-      font-family: system-ui, sans-serif;
+      font-family: "VT323", ui-monospace, monospace;
+      letter-spacing: 0.05em;
     }
 
     h1 {
-      color: #f97316;
+      color: #eb770a;
       margin-top: 1em;
     }
 
@@ -30,7 +32,8 @@
       margin: 10px 0;
       padding: 15px;
       border-radius: 10px;
-      font-size: 1.1em;
+      font-size: 1.5em;
+      letter-spacing: 0.03em;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -46,22 +49,49 @@
       color: #facc15;
     }
 
-    button, a {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 1em;
-      background-color: #f97316;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      cursor: pointer;
+    .action-row {
+      max-width: 400px;
+    margin: 15px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 12px;
     }
 
-    button:hover, a:hover {
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      min-height: 48px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+
+      padding: 14px 20px;
+      border-radius: 10px;
+      background-color: #f97316;
+      color: white;
+      font-family: "VT323", ui-monospace, monospace;
+      font-size: clamp(18px, 2.2vw, 22px);
+      font-weight: 700;
+    }
+
+    .btn:hover {
       background-color: #ea580c;
     }
+
+    button.btn {
+      appearance: none;
+      -webkit-appearance: none;
+      border: none;
+      outline: none;
+    }
+    button.btn:focus-visible {
+      outline: 2px solid #fbbf24;
+      outline-offset: 3px;
+    }
+
   </style>
 </head>
 
@@ -69,8 +99,10 @@
   <h1>Topp 3 resultater</h1>
   <ul id="bestetider"></ul>
 
-  <button id="resetTider">Nullstill resultater</button>
-  <a href="../index.html" target="_top" id="TilbakeTrykk">Tilbake til spill</a>
+  <div class="action-row">
+  <button id="resetTider" class="btn">Nullstill resultater</button>
+  <a href="../index.html" target="_top" class="btn" >Tilbake til spill</a>
+  </div>
 
   <script>
     const liste = document.getElementById("bestetider");
