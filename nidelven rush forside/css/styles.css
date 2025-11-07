@@ -1,17 +1,17 @@
 /* farger */
 :root{
-  --bg-dark:   #3f3f3f;   /* toppen */
-  --bg-page:   #6a6a6a;   /* bakgrunn */
+  --bg-dark:   #085899;   /* toppen */
+  --bg-page:   #d2d2d3;   /* bakgrunn */
   --frame:     #404040;   /* ramme rundt bilde */
   --white:     #ffffff;
-  --purple:    #b892ff;   /* "NIDELVEN" */
-  --cyan:      #8ad0ff;   /* "RUSH" og lenker i hamburger meny */
+  --purple:    #feb200;   /* "NIDELVEN" */
+  --cyan:      #eb770a;   /* "RUSH" og lenker i hamburger meny */
   --overlay:   rgba(0,0,0,.65); /* bakgrunnsskygge ved åpen meny */
-  --text:      #e9e9e9;
+  --text:      #eb770a;
 
   /* Start-knapp */
   --btn-fill:        #020202; 
-  --btn-border:      #18171e; 
+  --btn-border:      #eb770a; 
   --btn-inner:       #0a0b0a;
 }
 
@@ -45,10 +45,12 @@
 }
 .topnav a{
   color: var(--cyan);
+  text-shadow: #000000 0 1px 2px;
   text-decoration: none;
   font-weight: 600;
   letter-spacing: .04em;
   padding: 4px 6px;
+  font-size: 20px;
 }
 .topnav a:hover{
   opacity: .9;
@@ -58,9 +60,12 @@
 .spacer{ width:48px }
 
 .brand-wrap{ padding-block: 10px 12px; text-align:center }
-.brand{ margin:0; font-size: clamp(28px, 4.6vw, 48px) }
+.brand{ margin:0; font-size: clamp(34px, 4.6vw, 60px) }
 .brand-purple{ color: var(--purple) }
 .brand-cyan{ color: var(--cyan) }
+.brand{
+  text-shadow: #000000 0 2px 4px;
+}
 
 .drawer{
   position: fixed; inset: 0;
@@ -99,6 +104,9 @@
   color: var(--cyan); text-decoration:none; border-radius: 8px;
 }
 .drawer-links a:hover{ background: rgba(255,255,255,.05) }
+.drawer{
+  text-shadow: #000000 0 1px 2px;
+}
 
 
 .stage{ display:block; margin: 10px auto 20px }
@@ -123,14 +131,15 @@
 .start-btn{
   --px: 6px;
 
-  position: absolute; left:50%; bottom: 12%;
+  position: absolute; left:50%; bottom: 40%;
   transform: translateX(-50%);
   text-decoration: none;
-  color: #ffffff;
+  color: #ffffff;;
   font-size: clamp(18px, 2.7vw, 30px);
   letter-spacing: .05em;
 
-  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  text-shadow:
+    #000000 0 2px 4px;
 
   background: var(--btn-fill);
 
@@ -171,7 +180,7 @@
 }
 
 .h2{
-  font-size: clamp(18px, 2.6vw, 24px);
+  font-size: clamp(18px, 2.6vw, 25px);
   margin-bottom: 10px;
 }
 .card-plain{
