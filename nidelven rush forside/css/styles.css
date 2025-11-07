@@ -184,8 +184,7 @@
 .h2{
   font-size: clamp(18px, 2.6vw, 25px);
   margin-bottom: 10px;
-  text-shadow: #000000 0 2px 2px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 .card-plain{
   background: #0474ba; color: #f3f3f3;
