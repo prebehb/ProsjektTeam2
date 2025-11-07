@@ -1,11 +1,11 @@
 /* farger */
 :root{
-  --bg-dark:   #085899;   /* toppen */
-  --bg-page:   #d2d2d3;   /* bakgrunn */
+  --bg-dark:   #0474ba;   /* toppen */
+  --bg-page:   #ebebeb;   /* bakgrunn */
   --frame:     #404040;   /* ramme rundt bilde */
   --white:     #ffffff;
-  --purple:    #feb200;   /* "NIDELVEN" */
-  --cyan:      #eb770a;   /* "RUSH" og lenker i hamburger meny */
+  --purple:    #ffa630;   /* "NIDELVEN" */
+  --cyan:      #f17720;   /* "RUSH" og lenker i hamburger meny */
   --overlay:   rgba(0,0,0,.65); /* bakgrunnsskygge ved åpen meny */
   --text:      #eb770a;
 
@@ -51,6 +51,7 @@
   letter-spacing: .04em;
   padding: 4px 6px;
   font-size: 20px;
+  font-family: VT323, ui-monospace, monospace;
 }
 .topnav a:hover{
   opacity: .9;
@@ -185,7 +186,7 @@
   margin-bottom: 10px;
 }
 .card-plain{
-  background: #5f5f5f; color: #f3f3f3;
+  background: #0474ba; color: #f3f3f3;
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 10px;
   padding: 16px;
@@ -196,6 +197,7 @@
   color: #ffffff;
   text-shadow: #000000 0 1px 4px;
   border-top: 1px solid rgba(255,255,255,.08);
+  font-family: VT323, ui-monospace, monospace;
 }
 
 /* === Mobil: skjul topplenkene, vis hamburger === */
