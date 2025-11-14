@@ -46,7 +46,7 @@ const player = {
     jumpForce: 12,
     grounded: false,
     frameIndex: 0,
-    animationSpeed: 30,  
+    animationSpeed: 28,  
     animationCounter: 0  
 };
 
@@ -55,7 +55,16 @@ let frameCount = 0;
 let gameSpeed = 6;
 let isGameOver = false;
 let score = 0; 
+
+// --- UI/overlay
+const overlay = document.getElementById('overlay');
+const btnStart = document.getElementById('btnStart');
 const scoreEl = document.getElementById('score');
+const endCard = document.getElementById('endCard');
+const saveScoreBtn = document.getElementById('saveScoreBtn'); // NY
+const restartBtn = document.getElementById('restartBtn');         // NY
+const finalScoreText = document.getElementById('finalScoreText'); // NY
+
 
 btnStart.addEventListener('click', start); // Start spill
 restartBtn?.addEventListener('click', () => start()); // Restart knapp
@@ -161,7 +170,7 @@ function update() {
     if (isGameOver) {
         score = calculateScore();
         scoreEl.textContent = score.toString();
-        displayGameOver();
+        end();
         return;
     }
 
@@ -332,13 +341,3 @@ function displayGameOver() {
     ctx.fillText('Din Score: ' + score, canvas.width / 2, canvas.height / 2 - 50);
     ctx.fillText('Trykk spill for å spille igjen', canvas.width / 2, canvas.height / 2 + 40);
 }
-
-// Nullstill spillet
-viseCanvasKnapp.addEventListener('click', () => {
-    if (isGameOver) {
-        start();  // <-- BRUK start() I STEDET FOR resetGame()
-    }
-
-    startScore();
-    update();
-});
