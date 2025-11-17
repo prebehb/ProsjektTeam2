@@ -49,16 +49,16 @@ console.log('script.js loaded');
 // =============== SPILLTILSTAND ====================
 
 const player = {
-  x: Math.floor(W * 0.25),
+  x: Math.floor(W * 0.32), 
   y: groundLevel - (19 * 2),   // start rett på "vannet"
   w: 55 * 2,
   h: 19 * 2,
   dy: 0,
-  gravity: 0.7,    // litt tyngre tyngdekraft
-  jumpForce: 15,   // kraftigere hopp -> lettere å komme over tømmerstokk
+  gravity: 0.8,    // litt tyngre tyngdekraft
+  jumpForce: 13,   // kraftigere hopp -> lettere å komme over tømmerstokk
   grounded: true,
   frameIndex: 0,
-  animationSpeed: 100,     // ms per frame
+  animationSpeed: 200,     // ms per frame
   animationTimer: 0
 };
 
@@ -184,7 +184,7 @@ function hit(ax, ay, aw, ah, bx, by, bw, bh) {
 // =============== HINDERE ==========================
 
 function spawnObstacle() {
-  const isSeagull = Math.random() > 0.5;
+  const isSeagull = Math.random() > 0.8;
 
   if (isSeagull) {
     // Måke høyere enn kajakken
@@ -195,7 +195,7 @@ function spawnObstacle() {
       y,
       w: 50,
       h: 50,
-      speed: 5,             // litt raskere enn tømmerstokk
+      speed: 6,             // litt raskere enn tømmerstokk
       image: obstacleImages[1],
       frameIndex: 0,
       frameTimer: 0,
@@ -212,7 +212,7 @@ function spawnObstacle() {
       y,
       w: 55,   // litt kortere enn før
       h: logHeight,
-      speed: 4,
+      speed: 5,
       image: obstacleImages[0],
       scored: false
     });
