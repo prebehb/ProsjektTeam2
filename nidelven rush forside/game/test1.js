@@ -58,7 +58,7 @@ const player = {
   jumpForce: 13,   // kraftigere hopp -> lettere å komme over tømmerstokk
   grounded: true,
   frameIndex: 0,
-  animationSpeed: 200,     // ms per frame
+  animationSpeed: 300,     // ms per frame
   animationTimer: 0
 };
 
@@ -92,7 +92,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-// Klikk for hopp (valgfritt)
+// Klikk for hopp 
 canvas.addEventListener('click', () => {
   tryJump();
 });
@@ -248,7 +248,7 @@ function update(dt) {
     player.grounded = true;
   }
 
-  // Maks hopphøyde (valgfritt)
+  // Maks hopphøyde 
   const minY = H * 0.25;
   if (player.y < minY) {
     player.y = minY;
@@ -267,7 +267,7 @@ function update(dt) {
   if (spawnTimer <= 0) {
     spawnObstacle();
 
-    // Vanskelighetskurve (samme logikk, men else-if)
+    // Vanskelighetskurve – kortere tid mellom hindre med høyere score
     if (score >= 500) {
       spawnTimer = 100 + Math.random() * 500;
     } else if (score >= 300) {

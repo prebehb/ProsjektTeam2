@@ -202,7 +202,7 @@ function update() {
 
     // Hinder i tilfeldig rekkefølge
     if (frameCount % 90 === 0) {
-        const isSeagull = Math.random() > 0.5;
+        const isSeagull = Math.random() > 0.8;
         const randomImage = isSeagull ? obstacleImages[1] : obstacleImages[0];
         
         const obstacleY = canvas.height * (4 / 5) - (isSeagull ? 100 : 20); // Seagulls fly higher than logs
